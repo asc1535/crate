@@ -1037,7 +1037,7 @@ This is useful if used in conjunction with aggregation functions::
    shadow the table columns are used.
 
    Grouping on multi-value fields doesn't work. If such a field is encountered
-   during a group by operation an error is thrown.
+   during a group by operation an error is thrown. However, grouping for an individual field from within a multi-value column will work.
 
    Additionally, grouping can only be applied to columns with a plain index,
    which is the default for all columns.
