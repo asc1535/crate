@@ -49,6 +49,7 @@ import org.apache.lucene.index.SegmentReader;
 import org.apache.lucene.search.DocIdSetIterator;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreMode;
 import org.apache.lucene.search.Scorer;
 import org.apache.lucene.search.ScorerSupplier;
 import org.apache.lucene.search.TwoPhaseIterator;
@@ -238,7 +239,7 @@ public class Lucene {
      * Check whether there is one or more documents matching the provided query.
      */
     public static boolean exists(IndexSearcher searcher, Query query) throws IOException {
-        final Weight weight = searcher.createNormalizedWeight(query, false);
+        final Weight weight = searcher.createWeight(searcher.rewrite(query), ScoreMode.COMPLETE_NO_SCORES, 1f);
         // the scorer API should be more efficient at stopping after the first
         // match than the bulk scorer API
         for (LeafReaderContext context : searcher.getIndexReader().leaves()) {
@@ -534,7 +535,7 @@ public class Lucene {
         final IndexSearcher searcher = new IndexSearcher(reader);
         searcher.setQueryCache(null);
         final Query query = LongPoint.newRangeQuery(SeqNoFieldMapper.NAME, fromSeqNo, toSeqNo);
-        final Weight weight = searcher.createWeight(query, false, 1.0f);
+        final Weight weight = searcher.createWeight(query, ScoreMode.COMPLETE_NO_SCORES, 1.0f);
         for (LeafReaderContext leaf : reader.leaves()) {
             final Scorer scorer = weight.scorer(leaf);
             if (scorer == null) {

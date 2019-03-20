@@ -39,7 +39,7 @@ public class ShardMinLuceneVersionExpressionTest extends CrateDummyClusterServic
         IndexShard indexShard = mock(IndexShard.class);
         DocsStats docsStats = new DocsStats();
         when(indexShard.docStats()).thenReturn(docsStats);
-        when(indexShard.minimumCompatibleVersion()).thenReturn(Version.LUCENE_6_6_1);
+        when(indexShard.minimumCompatibleVersion()).thenReturn(Version.LUCENE_8_0_0);
 
         ShardMinLuceneVersionExpression expr = new ShardMinLuceneVersionExpression();
         String value = expr.value(indexShard);

@@ -132,10 +132,7 @@ public class LuceneOrderedDocCollector extends OrderedDocCollector {
         TopFieldCollector topFieldCollector = TopFieldCollector.create(
             sort,
             batchSize,
-            true,
-            doDocsScores,
-            doDocsScores,
-            false           // trackTotalHits - we don't use the number of total hits
+            batchSize
         );
         return doSearch(topFieldCollector, minScore, query);
     }
@@ -152,10 +149,7 @@ public class LuceneOrderedDocCollector extends OrderedDocCollector {
             sort,
             batchSize,
             lastDoc,
-            true,
-            doDocsScores,
-            doDocsScores,
-            false           // trackTotalHits - we don't use the number of total hits
+            batchSize
         );
         return doSearch(topFieldCollector, minScore, query(lastDoc));
     }

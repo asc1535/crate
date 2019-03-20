@@ -37,6 +37,7 @@ import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.search.DocIdSetIterator;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreMode;
 import org.apache.lucene.search.Scorer;
 import org.apache.lucene.search.Weight;
 import org.apache.lucene.util.Bits;
@@ -193,7 +194,7 @@ public class LuceneBatchIterator implements BatchIterator<Row> {
         for (LuceneCollectorExpression expression : expressions) {
             expression.startCollect(collectorContext);
         }
-        return indexSearcher.createWeight(indexSearcher.rewrite(query), doScores, 1f);
+        return indexSearcher.createWeight(indexSearcher.rewrite(query), ScoreMode.COMPLETE_NO_SCORES, 1f);
     }
 
     @Override
